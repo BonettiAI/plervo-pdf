@@ -71,7 +71,7 @@ try {
     $Start = @{ FilePath = $Executable; PassThru = $true; RedirectStandardOutput = (Join-Path $Folder 'gui-stdout.txt'); RedirectStandardError = (Join-Path $Folder 'gui-stderr.txt') }
     if ($Arguments.Count) { $Start.ArgumentList = $Arguments }
     $App = Start-Process @Start
-    $Result.launch_mode = 'execution alias'
+    $Result.launch_mode = 'executable path'
   }
     # Retain the process handle while it is alive so Windows preserves its exit code.
     [void] $App.Handle
