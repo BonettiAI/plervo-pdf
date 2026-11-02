@@ -18,7 +18,6 @@ $ChoicePath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts
 $BeforeChoice = (Get-ItemProperty -LiteralPath $ChoicePath -ErrorAction SilentlyContinue).ProgId
 $Aliases = Join-Path $env:LOCALAPPDATA 'Microsoft\WindowsApps'
 $Cli = Join-Path $Aliases "plervo-$Product-cli.exe"
-$Executable = Join-Path $Aliases "plervo-$Product.exe"
 $Document = Join-Path $Work "acceptance$($Config.extension)"
 $DocumentHash = $null
 function Invoke-Cli([string[]] $Arguments) {
@@ -30,6 +29,7 @@ try {
   Add-AppxPackage -Path $Package -AllowUnsigned
   $Installed = Get-AppxPackage -Name $Metadata.identity_name
   if (-not $Installed) { throw 'Package was not registered.' }
+  $Executable = Join-Path $Installed.InstallLocation "plervo-$Product.exe"
   $Manifest = Get-AppxPackageManifest -Package $Installed.PackageFullName
   if ($Manifest.Package.Identity.Publisher -notmatch 'OID\.2\.25\.311729368913984317654407730594956997722=1') { throw 'Not the unsigned testing namespace.' }
   foreach ($File in $Metadata.files) {
@@ -46,7 +46,7 @@ try {
   if ($StartEntries.Count -ne 1 -or $StartEntries[0].AppID -cne $StartId -or $StartEntries[0].Name -cne $Config.name) {
     throw 'Start must expose exactly one correctly named GUI entry; terminal tools must not have a tile.'
   }
-  if (-not (Test-Path $Cli) -or -not (Test-Path $Executable)) { throw 'Execution aliases missing.' }
+  if (-not (Test-Path $Cli)) { throw 'CLI execution alias missing.' }
   $VersionText = Invoke-Cli @('--version')
   if ($VersionText -notmatch [regex]::Escape($Metadata.release_version)) { throw 'Installed product version differs.' }
   $VersionText | Set-Content (Join-Path $Evidence 'version.txt')
@@ -126,7 +126,8 @@ try {
   if ($Registered) { Remove-AppxPackage -Package $Registered.PackageFullName }
 }
 if (Get-AppxPackage -Name $Metadata.identity_name) { throw 'Package remained after uninstall.' }
-if ((Test-Path $Cli) -or (Test-Path $Executable)) { throw 'Aliases remained after uninstall.' }
+if (Test-Path $Cli) { throw 'CLI alias remained after uninstall.' }
+if (@(Get-StartApps | Where-Object AppID -eq $StartId).Count) { throw 'Start entry remained after uninstall.' }
 if (-not $DocumentHash -or (Get-FileHash $Document).Hash -cne $DocumentHash) { throw 'User document was changed by the lifecycle.' }
 if ((Get-ItemProperty -LiteralPath $ChoicePath -ErrorAction SilentlyContinue).ProgId -cne $BeforeChoice) { throw 'Default file handler changed.' }
 @{ status = 'passed'; product = $Product; package_sha256 = $Metadata.sha256; source_commit = $Metadata.source_commit; gui_languages = $Languages; checks = @('installed payload hashes and source notices', 'installed CLI save and render', 'single correctly named Start entry', 'Start menu activation and normal exit', 'native GUI with normal exit', 'no default TCP listener', 'MSIX upgrade preserves app data', 'uninstall preserves document and default handler'); limitations = 'Screenshots require visual review; not all features/hardware or Store delivery are tested.' } |

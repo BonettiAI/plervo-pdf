@@ -55,6 +55,9 @@ application in Start. A separate execution-alias extension launches the CLI
 executable from a terminal, without registering another Application or a hidden
 tile (which would require the Store's HeadlessAppBypass exemption). The owning
 GUI Application permits multiple instances, as required for a console alias.
+Windows permits only one execution-alias extension per Application, so the
+GUI opens through Start, file associations or the Suite's registered application
+activation, rather than a second terminal alias.
 
 `package.ps1 -Product video -ValidationOnly -ManifestOnly` checks SDK semantics
 before compilation. Temporary inert probes are never installed or uploaded.
@@ -92,7 +95,7 @@ November 2: Sheets certification reported a nonfunctional CLI Start entry
 (10.1.1.11) and potentially confusing product representation (10.1.1.4). The
 shared manifest now keeps only the GUI tile, and installed acceptance enumerates
 Start entries and activates the exact AppsFolder item, in addition to exercising
-both execution aliases. No extra capability, hidden app or CLI feature removal
+the CLI execution alias. No extra capability, hidden app or CLI feature removal
 is involved. The separate PDF packaging template is outside this change.
 
 Sheets package `1.0.9.0` adds a persistent Plervo identity band, its own forest/mint
