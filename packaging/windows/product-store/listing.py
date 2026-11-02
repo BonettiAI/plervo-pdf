@@ -20,7 +20,7 @@ def main():
     png = output / 'en.png'
     script = output / 'capture.jsonl'
     script.write_text(json.dumps({'shot': str(png)}) + '\n')
-    env = dict(os.environ, PDFCRAFT_SYSTEM_FONTS='0', FIGCRAFT_NO_SYSTEM_FONTS='1')
+    env = dict(os.environ, PDFCRAFT_SYSTEM_FONTS='0', FIGCRAFT_NO_SYSTEM_FONTS='1', PLERVO_SHEETS_SYSTEM_FONTS='0')
     env['PLERVO_' + args.product.upper() + '_CONFIG_DIR'] = str(output / 'isolated-settings')
     helper = None
     crate = {

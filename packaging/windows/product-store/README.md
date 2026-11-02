@@ -4,7 +4,8 @@ These MSIX packages reuse the pinned public source and Plervo overlays in
 `products/sources.json`. `prepare.py` applies the additional Store overlay and
 records the source, patch, lockfile, font and original license hashes. The current
 base already includes Video's TLS certificate, crypto-bigint and Tokio fixes;
-`overlays.json` is empty to avoid reapplying the obsolete alpha.5 lockfile patch.
+`overlays.json` contains only the Sheets identity overlay; the obsolete alpha.5
+lockfile patch is not reapplied.
 No new advisory exception is introduced. CAD uses the reviewed source unchanged.
 
 October 27, 2026: candidates use the alpha.8 base plus merged security fixes and
@@ -49,8 +50,11 @@ The desktop `local-control` feature is excluded. Video's optional Whisper and
 neural-voice downloads are also excluded from these default-feature packages.
 CLI/MCP remains opt-in. The only manifest capability is `runFullTrust`, required
 for these local desktop applications. Updates are delivered by Microsoft Store;
-these apps do not contain an application self-updater. The public CLI entry is
-visible in Start, matching the accepted PDF packaging configuration.
+these apps do not contain an application self-updater. Each package has one GUI
+application in Start. A separate execution-alias extension launches the CLI
+executable from a terminal, without registering another Application or a hidden
+tile (which would require the Store's HeadlessAppBypass exemption). The owning
+GUI Application permits multiple instances, as required for a console alias.
 
 `package.ps1 -Product video -ValidationOnly -ManifestOnly` checks SDK semantics
 before compilation. Temporary inert probes are never installed or uploaded.
@@ -83,3 +87,22 @@ helpers. Canvas captures its native renderer on the disposable Windows runner, w
 a minimum size gate, without adding dependencies or changing production features.
 Helpers are removed after use and are never bundled. No screenshot is upscaled.
 Supplemental upstream attribution files and license directories are preserved.
+
+November 2: Sheets certification reported a nonfunctional CLI Start entry
+(10.1.1.11) and potentially confusing product representation (10.1.1.4). The
+shared manifest now keeps only the GUI tile, and installed acceptance enumerates
+Start entries and activates the exact AppsFolder item, in addition to exercising
+both execution aliases. No extra capability, hidden app or CLI feature removal
+is involved. The separate PDF packaging template is outside this change.
+
+Sheets package `1.0.9.0` adds a persistent Plervo identity band, its own forest/mint
+palette, a branded native window title and an explicit independent-project credit
+in About. These are a hash-pinned Store overlay on the unchanged alpha.8 source
+catalog; all original licenses and dependency notices remain intact. Capture uses
+`PLERVO_SHEETS_SYSTEM_FONTS=0` so published images contain only openly licensed
+embedded fonts. The default app can still use fonts installed by its user.
+
+The report does not identify the exact content behind 10.1.1.4. These changes and
+new screenshots must be reviewed with an accurate listing and certification notes;
+they are not a guarantee of approval or a claim that branding alone establishes
+distinct functionality. Passing this pipeline is not Microsoft certification.

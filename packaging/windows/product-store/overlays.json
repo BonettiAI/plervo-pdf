@@ -1,1 +1,6 @@
-{}
+{
+  "sheets": {
+    "file": "patches/sheets-identity.patch",
+    "sha256": "333166612497de340779b5880799365fd74ef4c812ccc234f1a5ad17b8886999"
+  }
+}

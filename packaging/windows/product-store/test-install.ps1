@@ -36,6 +36,16 @@ try {
     if ((Get-FileHash (Join-Path $Installed.InstallLocation $File.path)).Hash.ToLowerInvariant() -cne $File.sha256) { throw "Installed file differs: $($File.path)" }
   }
   if (Test-Path (Join-Path $Installed.InstallLocation 'portable.txt')) { throw 'MSIX must use per-user writable storage.' }
+  $StartId = "$($Installed.PackageFamilyName)!$($Config.application_id)"
+  $RegistrationDeadline = [DateTime]::UtcNow.AddSeconds(30)
+  do {
+    $StartEntries = @(Get-StartApps | Where-Object { $_.AppID.StartsWith("$($Installed.PackageFamilyName)!", [StringComparison]::Ordinal) })
+    if (-not $StartEntries.Count) { Start-Sleep -Milliseconds 500 }
+  } while (-not $StartEntries.Count -and [DateTime]::UtcNow -lt $RegistrationDeadline)
+  ConvertTo-Json -InputObject $StartEntries | Set-Content (Join-Path $Evidence 'start-menu-entries.json')
+  if ($StartEntries.Count -ne 1 -or $StartEntries[0].AppID -cne $StartId -or $StartEntries[0].Name -cne $Config.name) {
+    throw 'Start must expose exactly one correctly named GUI entry; terminal tools must not have a tile.'
+  }
   if (-not (Test-Path $Cli) -or -not (Test-Path $Executable)) { throw 'Execution aliases missing.' }
   $VersionText = Invoke-Cli @('--version')
   if ($VersionText -notmatch [regex]::Escape($Metadata.release_version)) { throw 'Installed product version differs.' }
@@ -84,10 +94,10 @@ try {
       [Environment]::SetEnvironmentVariable("PLERVO_$($Product.ToUpperInvariant())_CONFIG_DIR", (Join-Path $Work "settings-$Product"))
       $Arguments = @()
     }
-    # Sheets replaces its initial app title with the blank workbook's title.
-    $ExpectedTitle = if ($Product -eq 'sheets') { 'Book1' } else { $Config.name }
+    $ExpectedTitle = $Config.name
     & (Join-Path $PSScriptRoot 'capture.ps1') -Executable $Executable -Arguments $Arguments -Folder (Join-Path $Evidence $Language) -ExpectedTitle $ExpectedTitle
   }
+  & (Join-Path $PSScriptRoot 'capture.ps1') -Executable (Join-Path $Installed.InstallLocation "plervo-$Product.exe") -StartMenuAppId $StartId -Folder (Join-Path $Evidence 'start-menu') -ExpectedTitle $Config.name
   # A real higher-version MSIX update must preserve per-user data and the document.
   $AppData = Join-Path $env:LOCALAPPDATA "Packages\$($Installed.PackageFamilyName)\LocalState"
   New-Item -ItemType Directory -Force -Path $AppData | Out-Null
@@ -119,5 +129,5 @@ if (Get-AppxPackage -Name $Metadata.identity_name) { throw 'Package remained aft
 if ((Test-Path $Cli) -or (Test-Path $Executable)) { throw 'Aliases remained after uninstall.' }
 if (-not $DocumentHash -or (Get-FileHash $Document).Hash -cne $DocumentHash) { throw 'User document was changed by the lifecycle.' }
 if ((Get-ItemProperty -LiteralPath $ChoicePath -ErrorAction SilentlyContinue).ProgId -cne $BeforeChoice) { throw 'Default file handler changed.' }
-@{ status = 'passed'; product = $Product; package_sha256 = $Metadata.sha256; source_commit = $Metadata.source_commit; gui_languages = $Languages; checks = @('installed payload hashes and source notices', 'installed CLI save and render', 'native GUI with normal exit', 'no default TCP listener', 'MSIX upgrade preserves app data', 'uninstall preserves document and default handler'); limitations = 'Screenshots require visual review; not all features/hardware or Store delivery are tested.' } |
+@{ status = 'passed'; product = $Product; package_sha256 = $Metadata.sha256; source_commit = $Metadata.source_commit; gui_languages = $Languages; checks = @('installed payload hashes and source notices', 'installed CLI save and render', 'single correctly named Start entry', 'Start menu activation and normal exit', 'native GUI with normal exit', 'no default TCP listener', 'MSIX upgrade preserves app data', 'uninstall preserves document and default handler'); limitations = 'Screenshots require visual review; not all features/hardware or Store delivery are tested.' } |
   ConvertTo-Json -Depth 5 | Set-Content (Join-Path $Evidence 'result.json') -Encoding utf8
