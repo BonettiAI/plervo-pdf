@@ -4,8 +4,8 @@ These MSIX packages reuse the pinned public source and Plervo overlays in
 `products/sources.json`. `prepare.py` applies the additional Store overlay and
 records the source, patch, lockfile, font and original license hashes. The current
 base already includes Video's TLS certificate, crypto-bigint and Tokio fixes;
-`overlays.json` contains only the Sheets identity overlay; the obsolete alpha.5
-lockfile patch is not reapplied.
+`overlays.json` contains the Sheets identity and Develop Store-link overlays;
+the obsolete alpha.5 lockfile patch is not reapplied.
 No new advisory exception is introduced. CAD uses the reviewed source unchanged.
 
 October 27, 2026: candidates use the alpha.8 base plus merged security fixes and
@@ -109,3 +109,13 @@ The report does not identify the exact content behind 10.1.1.4. These changes an
 new screenshots must be reviewed with an accurate listing and certification notes;
 they are not a guarantee of approval or a claim that branding alone establishes
 distinct functionality. Passing this pipeline is not Microsoft certification.
+
+November 2, Develop and Canvas: certification reported external software
+acquisition from Develop's About dialog (10.1.5), and Canvas's extra CLI Start
+entry (10.1.1.11). Both replacement candidates use Store version `1.0.9.0`
+and the single-application manifest above. Develop's About and Help acquisition
+links now name and open the Microsoft Store listings for Develop and Suite;
+source, documentation, feedback and optional donation links remain separate.
+Its pinned Store overlay leaves the public macOS/Linux source and all licenses
+unchanged. Native qualification also captures the actual About dialog for review.
+These are candidate fixes, not confirmation that Microsoft approved either app.

@@ -2,5 +2,9 @@
   "sheets": {
     "file": "patches/sheets-identity.patch",
     "sha256": "0b6ac67ff78b13b02940cdd4d760a60bd4f8d8448a75726fca2c9d37c156c621"
+  },
+  "develop": {
+    "file": "patches/develop-store-links.patch",
+    "sha256": "914b821e99f2364a6ddbfdfc42b40ed5fecd014e2659f3b19514311989e14236"
   }
 }

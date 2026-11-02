@@ -54,7 +54,7 @@
     "publisher": "CN=B95B2115-019C-4863-ABF3-046177D1E135",
     "publisher_display_name": "Ricardo Bonetti",
     "application_id": "PlervoDevelop",
-    "package_version": "1.0.8.0",
+    "package_version": "1.0.9.0",
     "description": "Local photo development with exposure, color and detail controls.",
     "extension": ".dng",
     "file_type": "RAW photograph"
@@ -138,7 +138,7 @@
     "publisher": "CN=B95B2115-019C-4863-ABF3-046177D1E135",
     "publisher_display_name": "Ricardo Bonetti",
     "application_id": "PlervoCanvas",
-    "package_version": "1.0.8.0",
+    "package_version": "1.0.9.0",
     "description": "Local interface design with frames and reusable components.",
     "extension": ".figcraft",
     "file_type": "Plervo Canvas document"
