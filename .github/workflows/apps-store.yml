@@ -17,6 +17,7 @@ on:
       - 'products/licenses/**'
       - 'products/deny.toml'
       - 'products/accept_cli.py'
+      - 'products/acceptance-requirements.txt'
       - 'assets/products/**'
 
 permissions:

@@ -1,5 +1,5 @@
 <# Native window diagnostics on a disposable Windows CI desktop, never the user's computer. #>
-param([string] $Executable, [string[]] $Arguments, [string] $Folder, [string] $ExpectedTitle)
+param([string] $Executable, [string[]] $Arguments, [string] $Folder, [string] $ExpectedTitle, [string] $StartMenuAppId)
 $ErrorActionPreference = 'Stop'
 if ($env:GITHUB_ACTIONS -ne 'true' -or $env:RUNNER_OS -ne 'Windows') { throw 'Disposable Windows GitHub runner required' }
 Add-Type -AssemblyName System.Drawing, System.Windows.Forms
@@ -46,9 +46,33 @@ New-Item -ItemType Directory -Force -Path $Folder | Out-Null
 $App = $null
 $Result = [ordered] @{ passed = $false; normal_close = $false; scope = 'Installed GUI launch, response, app-only capture, no TCP listener and normal close. Screenshots require visual review.' }
 try {
-  $Start = @{ FilePath = $Executable; PassThru = $true; RedirectStandardOutput = (Join-Path $Folder 'gui-stdout.txt'); RedirectStandardError = (Join-Path $Folder 'gui-stderr.txt') }
-  if ($Arguments.Count) { $Start.ArgumentList = $Arguments }
-  $App = Start-Process @Start
+  if ($StartMenuAppId) {
+    # Open the same registered AppsFolder item used by Start, not the executable alias.
+    # Resolve the resulting process by the hash-verified installed executable path.
+    $ProcessName = [IO.Path]::GetFileNameWithoutExtension($Executable)
+    if (Get-Process -Name $ProcessName -ErrorAction SilentlyContinue | Where-Object Path -EQ $Executable) {
+      throw 'Start menu acceptance requires a fresh process.'
+    }
+    $Shell = New-Object -ComObject Shell.Application
+    $Entry = $Shell.NameSpace('shell:AppsFolder').ParseName($StartMenuAppId)
+    if (-not $Entry) { throw 'Registered Start menu item was not found.' }
+    $Entry.InvokeVerb('open')
+    $LaunchDeadline = [DateTime]::UtcNow.AddSeconds(90)
+    do {
+      Start-Sleep -Milliseconds 500
+      $LaunchedProcesses = @(Get-Process -Name $ProcessName -ErrorAction SilentlyContinue | Where-Object Path -EQ $Executable)
+      if ($LaunchedProcesses.Count -gt 1) { throw 'Start menu activation launched multiple application processes.' }
+      $App = $LaunchedProcesses | Select-Object -First 1
+    } while (-not $App -and [DateTime]::UtcNow -lt $LaunchDeadline)
+    if (-not $App) { throw 'Start menu activation did not launch the installed GUI.' }
+    $Result.launch_mode = 'Start menu / AppsFolder'
+    $Result.app_user_model_id = $StartMenuAppId
+  } else {
+    $Start = @{ FilePath = $Executable; PassThru = $true; RedirectStandardOutput = (Join-Path $Folder 'gui-stdout.txt'); RedirectStandardError = (Join-Path $Folder 'gui-stderr.txt') }
+    if ($Arguments.Count) { $Start.ArgumentList = $Arguments }
+    $App = Start-Process @Start
+    $Result.launch_mode = 'executable path'
+  }
     # Retain the process handle while it is alive so Windows preserves its exit code.
     [void] $App.Handle
     $Deadline = [DateTime]::UtcNow.AddSeconds(90)
