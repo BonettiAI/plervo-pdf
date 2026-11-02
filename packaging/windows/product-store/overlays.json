@@ -5,6 +5,6 @@
   },
   "develop": {
     "file": "patches/develop-store-links.patch",
-    "sha256": "914b821e99f2364a6ddbfdfc42b40ed5fecd014e2659f3b19514311989e14236"
+    "sha256": "32e8ef14afe61d27af71177ee527d798ea3b76538a82e499b597e6ca5b8d0346"
   }
 }

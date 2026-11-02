@@ -116,6 +116,8 @@ entry (10.1.1.11). Both replacement candidates use Store version `1.0.9.0`
 and the single-application manifest above. Develop's About and Help acquisition
 links now name and open the Microsoft Store listings for Develop and Suite;
 source, documentation, feedback and optional donation links remain separate.
+The missing-external-editor message no longer promotes an external download;
+it directs the user to configure an editor already installed on their machine.
 Its pinned Store overlay leaves the public macOS/Linux source and all licenses
 unchanged. Native qualification also captures the actual About dialog for review.
 These are candidate fixes, not confirmation that Microsoft approved either app.
