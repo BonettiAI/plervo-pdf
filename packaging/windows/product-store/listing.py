@@ -53,6 +53,10 @@ def main():
         if helper:
             subprocess.run(['cargo', 'clippy', '--locked', '-p', crate, '--example', 'plervo_store_shot', '--', '-D', 'warnings'], cwd=source, env=env, check=True, timeout=1200)
         subprocess.run(['cargo', 'run', '--locked', '-p', crate, *extra], cwd=source, env=env, check=True, timeout=2400)
+        if args.product == 'develop':
+            # Preserve the actual About dialog that certification flagged, too.
+            script.write_text(json.dumps({'method': 'ui.menu.invoke', 'params': {'command': 'app.about'}}) + '\n')
+            subprocess.run(['cargo', 'run', '--locked', '-p', crate, *extra[:-1], str(output / 'about-en.png')], cwd=source, env=env, check=True, timeout=120)
         header = png.read_bytes()[:24]
         if header[:8] != b'\x89PNG\r\n\x1a\n':
             raise ValueError('Renderer did not write a PNG')

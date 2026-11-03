@@ -1,0 +1,88 @@
+diff --git a/apps/lightcraft/src/editors.rs b/apps/lightcraft/src/editors.rs
+index 29dcf76..dc7110b 100644
+--- a/apps/lightcraft/src/editors.rs
++++ b/apps/lightcraft/src/editors.rs
+@@ -111,9 +111,7 @@ fn launcher(app: &str) -> Result<Launcher, String> {
+     if !app.eq_ignore_ascii_case(PHOTOCRAFT) {
+         return Ok(if cfg!(target_os = "macos") { Launcher::MacApp(app.to_string()) } else { Launcher::Program(PathBuf::from(app)) });
+     }
+-    find_photocraft().ok_or_else(|| {
+-        "PhotoCraft isn't installed. Get it from plervo.com/apps/photocraft, or give where it is in Settings ▸ External Editing.".to_string()
+-    })
++    find_photocraft().ok_or_else(|| "PhotoCraft isn't installed. Configure an already installed editor in Settings ▸ External Editing.".to_string())
+ }
+
+ fn find_photocraft() -> Option<Launcher> {
+diff --git a/crates/ui-egui/src/links.rs b/crates/ui-egui/src/links.rs
+index b32a788..384c2f4 100644
+--- a/crates/ui-egui/src/links.rs
++++ b/crates/ui-egui/src/links.rs
+@@ -4,10 +4,10 @@
+ pub const APP: &str = "develop";
+ /// The Plervo support page.
+ pub const DISCORD: &str = "https://buymeacoffee.com/alport";
+-/// The Plervo website.
+-pub const WEBSITE: &str = "https://plervo.com";
+-/// This app's page on the Plervo website.
+-pub const APP_PAGE: &str = "https://plervo.com/#app-develop";
++/// The published Suite listing; Store builds acquire other apps through the Store.
++pub const WEBSITE: &str = "https://apps.microsoft.com/detail/9P5P5QD5GDK1";
++/// This app's Microsoft Store listing.
++pub const APP_PAGE: &str = "https://apps.microsoft.com/detail/9PLTQ9RL45R3";
+ /// This app's source repository.
+ pub const GITHUB: &str = "https://github.com/alportblu/plervo-pdf";
+
+@@ -18,9 +18,9 @@ pub const HELP: &str = "https://github.com/alportblu/plervo-pdf/tree/main/docs";
+ pub const LINKS: &[(&str, &str, &str)] = &[
+     ("app.help", "Plervo Develop Help", HELP),
+     ("app.discord", "Support Plervo", DISCORD),
+-    ("app.website", "Plervo Develop Website", APP_PAGE),
++    ("app.website", "Plervo Develop · Microsoft Store", APP_PAGE),
+     ("app.github", "Plervo Develop on GitHub", GITHUB),
+-    ("app.artcraft", "Plervo Website", WEBSITE),
++    ("app.artcraft", "Plervo Suite · Microsoft Store", WEBSITE),
+     ("app.feedback", "Send Feedback…", FEEDBACK),
+ ];
+
+@@ -50,7 +50,8 @@ mod tests {
+             assert!(!label.is_empty());
+             assert_eq!(url_of(id), Some(*url));
+         }
+-        assert_eq!(APP_PAGE, format!("{WEBSITE}/#app-{APP}"));
++        assert_eq!(url_of("app.website"), Some("https://apps.microsoft.com/detail/9PLTQ9RL45R3"));
++        assert_eq!(url_of("app.artcraft"), Some("https://apps.microsoft.com/detail/9P5P5QD5GDK1"));
+         assert_eq!(GITHUB, "https://github.com/alportblu/plervo-pdf");
+     }
+ }
+diff --git a/crates/ui-egui/src/menus.rs b/crates/ui-egui/src/menus.rs
+index 75f4c91..12985dd 100644
+--- a/crates/ui-egui/src/menus.rs
++++ b/crates/ui-egui/src/menus.rs
+@@ -210,9 +210,9 @@ pub const UI_COMMANDS: &[UiCommand] = &[
+     ("app.help", "Plervo Develop Help", Some("F1"), "Help"),
+     ("app.discord", "Support Plervo", None, "Help"),
+     ("app.feedback", "Send Feedback…", None, "Help"),
+-    ("app.website", "Plervo Develop Website", None, "Help"),
++    ("app.website", "Plervo Develop · Microsoft Store", None, "Help"),
+     ("app.github", "Plervo Develop on GitHub", None, "Help"),
+-    ("app.artcraft", "Plervo Website", None, "Help"),
++    ("app.artcraft", "Plervo Suite · Microsoft Store", None, "Help"),
+     ("app.shortcuts", "Keyboard Shortcuts", Some("Cmd+/"), "Help"),
+     ("app.setShortcut", "Set Keyboard Shortcut", None, ""),
+     ("app.resetShortcuts", "Reset All Keyboard Shortcuts", None, ""),
+diff --git a/crates/ui-egui/src/panels/dialogs.rs b/crates/ui-egui/src/panels/dialogs.rs
+index 4cf5399..0a952a0 100644
+--- a/crates/ui-egui/src/panels/dialogs.rs
++++ b/crates/ui-egui/src/panels/dialogs.rs
+@@ -1179,9 +1179,9 @@ pub fn show(app: &mut LightcraftApp, ctx: &egui::Context) {
+                             }
+                             ui.add_space(6.0);
+                             for (label, url) in [
+-                                ("Plervo Develop website", crate::links::APP_PAGE),
++                                ("Plervo Develop · Microsoft Store", crate::links::APP_PAGE),
+                                 ("Source code on GitHub", crate::links::GITHUB),
+-                                ("Plervo — more creative apps", crate::links::WEBSITE),
++                                ("Plervo Suite · Microsoft Store", crate::links::WEBSITE),
+                             ] {
+                                 let r = ui.link(crate::i18n::tr(label)).on_hover_text(url);
+                                 if r.clicked() {
