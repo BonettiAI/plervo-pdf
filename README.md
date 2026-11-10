@@ -4,7 +4,9 @@
 
 Start with **Plervo Suite**, then choose the apps you need from its catalog. The Suite installs, opens, updates and removes each app. Plervo is maintained by **AlporT**, with optional community support.
 
-[Download Plervo Suite](https://plervo.com) · [Release notes](https://github.com/alportblu/plervo-pdf/releases) · [Support on Buy Me a Coffee](https://buymeacoffee.com/alport)
+[Download Plervo Suite](https://plervo.com) · [Release notes](https://github.com/BonettiAI/plervo-pdf/releases) · [Support on Buy Me a Coffee](https://buymeacoffee.com/alport)
+
+[Apps](#the-apps) · [Downloads](#downloads-and-platform-support) · [Development](#development) · [Licenses and credits](#license-and-credits)
 
 ## The apps
 
@@ -46,7 +48,7 @@ apps enabled in that Suite version; see [current Store availability](docs/micros
 
 Linux app packages were exercised on Ubuntu 24.04, Debian 13 and Fedora 44; the Suite also passed Ubuntu 26.04 acceptance. Linux Mint 22 shares the Ubuntu 24.04 base but has not been tested separately. macOS Intel, Linux ARM and native Wayland sessions are not qualified.
 
-The alpha has known limits. Final Mac GUI acceptance, installation on a clean Mac and broader hardware coverage remain pending. Starting with Suite alpha.8, an automatic check at startup and every six hours while open shows available Suite and app updates. The Suite update button downloads the appropriate Mac DMG or Linux DEB/RPM; install that package and reopen Suite. Checks can be switched to manual in Settings. Existing alpha.5 users need to install this newer Suite once before they receive these notices. Check the [release notes](https://github.com/alportblu/plervo-pdf/releases) for available packages and their validation and limitations.
+The alpha has known limits. Final Mac GUI acceptance, installation on a clean Mac and broader hardware coverage remain pending. Starting with Suite alpha.8, an automatic check at startup and every six hours while open shows available Suite and app updates. The Suite update button downloads the appropriate Mac DMG or Linux DEB/RPM; install that package and reopen Suite. Checks can be switched to manual in Settings. Existing alpha.5 users need to install this newer Suite once before they receive these notices. Check the [release notes](https://github.com/BonettiAI/plervo-pdf/releases) for available packages and their validation and limitations.
 
 ## Languages
 
@@ -62,7 +64,7 @@ The Suite verifies official release origins, package versions and SHA-256 checks
 
 Automation is opt-in. Donations open an external support page only when you choose the link; the apps contain no payment SDK or financial credentials. Support is always optional.
 
-Read the [security notes](SECURITY-PLERVO.md) or [report a vulnerability privately](https://github.com/alportblu/plervo-pdf/security). Tests, package scans and notarization do not guarantee the absence of vulnerabilities.
+Read the [security notes](SECURITY-PLERVO.md) or [report a vulnerability privately](https://github.com/BonettiAI/plervo-pdf/security). Tests, package scans and notarization do not guarantee the absence of vulnerabilities.
 
 ## Development
 

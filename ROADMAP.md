@@ -1,3 +1,7 @@
+Repository presentation — 2026-11-10: refresh README navigation and repository
+links for the BonettiAI account. Preserve MIT OR Apache-2.0, upstream credits,
+third-party notices and all existing release qualification limits.
+
 Store app-family preparation — 2026-10-30: extend the proven MSIX lifecycle to
 the ten reserved apps, preserving notices, identities and default-only features.
 Final native qualification, screenshot review and submission remain pending.
