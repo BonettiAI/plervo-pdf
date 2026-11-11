@@ -1,3 +1,9 @@
+Security maintenance — 2026-11-11: lock `rustix` to 1.1.6 for
+[RUSTSEC-2026-0486](https://rustsec.org/advisories/RUSTSEC-2026-0486.html) and
+`xattr` to 1.7.0 for its compatible size-query API. Preserve original license
+texts in the reviewed distribution inventory. Previously published installers
+are unchanged; new packages still require qualification and distribution.
+
 Repository presentation — 2026-11-10: refresh README navigation and repository
 links for the BonettiAI account. Preserve MIT OR Apache-2.0, upstream credits,
 third-party notices and all existing release qualification limits.

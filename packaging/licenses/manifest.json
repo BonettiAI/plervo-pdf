@@ -1,9 +1,9 @@
 {
   "generator": "cargo-about 0.9.2 plus reviewed original upstream notices",
-  "reviewed": "2026-10-28",
+  "reviewed": "2026-11-11",
   "inputs": {
     "ATTRIBUTION.toml": "cf225c610208f480d16c592f7dfc73692b666f879396b181efae9870080cbe7c",
-    "Cargo.lock": "38052f7eee71428fd9479dbfc365451a04a5df43fb61e11da2da0323645b72e8",
+    "Cargo.lock": "9cb73ad436b92f88d33ec5b696c6a9629d7efe88a6c10fb05bba7d5745999ff0",
     "Cargo.toml": "f87d72b8315a2d217269c6df020f9fe918a167ea1e1ccdffa7c79868d7df23e7",
     "apps/pdfcraft-cli/Cargo.toml": "3d1e7b9482e09b117ca255fbb57952a4b708154ddc6730918167d771472c78e2",
     "apps/pdfcraft-web/Cargo.toml": "fc0e3c1398f687670df8dd48d609f16edceec7b8fffa82cc8ccb862d8af72900",
@@ -52,7 +52,7 @@
     "vendor/winit/Cargo.toml": "2aeb741d47b763ee198ca915c330a6bf0b1fc094dd69357e80278b7852289c61",
     "xtask/Cargo.toml": "4927a79db3efb8c426a3c46427f76218228d07cabbe6779e0eb8e83c3003d12e"
   },
-  "notices_lf_sha256": "d28132f875b4f44b8b81189ddac3323bbfe1ab42de4ba1f13b69e7c62a1c3657",
+  "notices_lf_sha256": "f2691b8fd764e373343c14e0f7922d7fbbf8205fa7fdfc8f81a5c08295017e9d",
   "package_count": 634,
   "packages": [
     {
@@ -2487,7 +2487,7 @@
     },
     {
       "name": "rustix",
-      "version": "1.1.5",
+      "version": "1.1.6",
       "license": "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT",
       "source": "registry+https://github.com/rust-lang/crates.io-index"
     },
@@ -3675,7 +3675,7 @@
     },
     {
       "name": "xattr",
-      "version": "1.6.1",
+      "version": "1.7.0",
       "license": "MIT OR Apache-2.0",
       "source": "registry+https://github.com/rust-lang/crates.io-index"
     },
@@ -4043,7 +4043,7 @@
         "https://crates.io/api/v1/crates/quote/1.0.47/download#LICENSE-MIT",
         "https://crates.io/api/v1/crates/rustc-hash/1.1.0/download#LICENSE-MIT",
         "https://crates.io/api/v1/crates/rustix/0.38.44/download#LICENSE-MIT",
-        "https://crates.io/api/v1/crates/rustix/1.1.5/download#LICENSE-MIT",
+        "https://crates.io/api/v1/crates/rustix/1.1.6/download#LICENSE-MIT",
         "https://crates.io/api/v1/crates/rustversion/1.0.23/download#LICENSE-MIT",
         "https://crates.io/api/v1/crates/semver/1.0.28/download#LICENSE-MIT",
         "https://crates.io/api/v1/crates/serde/1.0.229/download#LICENSE-MIT",
@@ -4129,7 +4129,7 @@
         "quote@1.0.47",
         "rustc-hash@1.1.0",
         "rustix@0.38.44",
-        "rustix@1.1.5",
+        "rustix@1.1.6",
         "rustversion@1.0.23",
         "semver@1.0.28",
         "serde@1.0.229",
@@ -4439,7 +4439,7 @@
         "https://crates.io/api/v1/crates/rustc-hash/1.1.0/download#LICENSE-APACHE",
         "https://crates.io/api/v1/crates/rustc_version/0.4.1/download#LICENSE-APACHE",
         "https://crates.io/api/v1/crates/rustix/0.38.44/download#LICENSE-APACHE",
-        "https://crates.io/api/v1/crates/rustix/1.1.5/download#LICENSE-APACHE",
+        "https://crates.io/api/v1/crates/rustix/1.1.6/download#LICENSE-APACHE",
         "https://crates.io/api/v1/crates/rustls-native-certs/0.8.4/download#LICENSE-APACHE",
         "https://crates.io/api/v1/crates/rustls/0.23.46/download#LICENSE-APACHE",
         "https://crates.io/api/v1/crates/scoped-tls/1.0.1/download#LICENSE-APACHE",
@@ -4466,7 +4466,7 @@
         "https://crates.io/api/v1/crates/url/2.5.8/download#LICENSE-APACHE",
         "https://crates.io/api/v1/crates/uuid/1.26.1/download#LICENSE-APACHE",
         "https://crates.io/api/v1/crates/version_check/0.9.5/download#LICENSE-APACHE",
-        "https://crates.io/api/v1/crates/xattr/1.6.1/download#LICENSE-APACHE"
+        "https://crates.io/api/v1/crates/xattr/1.7.0/download#LICENSE-APACHE"
       ],
       "packages": [
         "ahash@0.8.12",
@@ -4562,7 +4562,7 @@
         "rustc-hash@1.1.0",
         "rustc_version@0.4.1",
         "rustix@0.38.44",
-        "rustix@1.1.5",
+        "rustix@1.1.6",
         "rustls-native-certs@0.8.4",
         "rustls@0.23.46",
         "scoped-tls@1.0.1",
@@ -4589,7 +4589,7 @@
         "url@2.5.8",
         "uuid@1.26.1",
         "version_check@0.9.5",
-        "xattr@1.6.1"
+        "xattr@1.7.0"
       ],
       "licenses": [
         "Apache-2.0",
@@ -7682,13 +7682,13 @@
         "https://crates.io/api/v1/crates/linux-raw-sys/0.12.1/download#LICENSE-Apache-2.0_WITH_LLVM-exception",
         "https://crates.io/api/v1/crates/linux-raw-sys/0.4.15/download#LICENSE-Apache-2.0_WITH_LLVM-exception",
         "https://crates.io/api/v1/crates/rustix/0.38.44/download#LICENSE-Apache-2.0_WITH_LLVM-exception",
-        "https://crates.io/api/v1/crates/rustix/1.1.5/download#LICENSE-Apache-2.0_WITH_LLVM-exception"
+        "https://crates.io/api/v1/crates/rustix/1.1.6/download#LICENSE-Apache-2.0_WITH_LLVM-exception"
       ],
       "packages": [
         "linux-raw-sys@0.12.1",
         "linux-raw-sys@0.4.15",
         "rustix@0.38.44",
-        "rustix@1.1.5"
+        "rustix@1.1.6"
       ],
       "licenses": [
         "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT"
@@ -8942,11 +8942,11 @@
       "sha256": "377c2e7c53250cc5905c0b0532d35973392af16ffb9596a41d99d202cf3617c9",
       "sources": [
         "https://crates.io/api/v1/crates/rustix/0.38.44/download#COPYRIGHT",
-        "https://crates.io/api/v1/crates/rustix/1.1.5/download#COPYRIGHT"
+        "https://crates.io/api/v1/crates/rustix/1.1.6/download#COPYRIGHT"
       ],
       "packages": [
         "rustix@0.38.44",
-        "rustix@1.1.5"
+        "rustix@1.1.6"
       ],
       "licenses": [
         "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT"
@@ -9491,11 +9491,11 @@
       "sha256": "8b427f5bc501764575e52ba4f9d95673cf8f6d80a86d0d06599852e1a9a20a36",
       "sources": [
         "https://crates.io/api/v1/crates/tempfile/3.27.0/download#LICENSE-MIT",
-        "https://crates.io/api/v1/crates/xattr/1.6.1/download#LICENSE-MIT"
+        "https://crates.io/api/v1/crates/xattr/1.7.0/download#LICENSE-MIT"
       ],
       "packages": [
         "tempfile@3.27.0",
-        "xattr@1.6.1"
+        "xattr@1.7.0"
       ],
       "licenses": [
         "MIT",
